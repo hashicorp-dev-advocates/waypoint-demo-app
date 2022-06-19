@@ -20,9 +20,8 @@ job "payments-database" {
       connect {
         sidecar_service {
           proxy {
-            # expose the metrics endpont 
             config {
-              envoy_prometheus_bind_addr = "0.0.0.0:9102"
+              protocol = "tcp"
             }
           }
         }
@@ -34,7 +33,7 @@ job "payments-database" {
 
       config {
         image = "postgres:14.2"
-        ports = ["http"]
+        ports = ["tcp"]
       }
 
       env {
