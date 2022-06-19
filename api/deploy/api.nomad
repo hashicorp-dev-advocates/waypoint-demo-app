@@ -32,7 +32,7 @@ job "api-deployment" {
 
     service {
       name = "api"
-      port = "9090"
+      port = "3000"
 
       connect {
         sidecar_service {
@@ -44,7 +44,7 @@ job "api-deployment" {
 
             upstreams {
               destination_name = "payments"
-              local_bind_port  = 9091
+              local_bind_port  = 3001
             }
           }
         }
@@ -57,11 +57,6 @@ job "api-deployment" {
       config {
         image = "${artifact.image}:${artifact.tag}"
         ports = ["http"]
-      }
-
-      env {
-        NAME          = "API V1"
-        UPSTREAM_URIS = "http://localhost:9091"
       }
 
       resources {
