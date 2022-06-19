@@ -25,8 +25,8 @@ job "api-deployment" {
       tags = ["metrics"]
       meta {
         metrics    = "prometheus"
-        job        = $${NOMAD_JOB_NAME}
-        datacenter = $${node.datacenter}
+        job        = "$${NOMAD_JOB_NAME}"
+        datacenter = "$${node.datacenter}"
       }
     }
 
