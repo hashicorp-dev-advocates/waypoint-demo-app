@@ -10,7 +10,7 @@ app "payments-deployment" {
 
     registry {
       use "docker" {
-        image = "10.10.0.100/hashicraft/payments"
+        image = "10.5.0.100/hashicraft/payments"
         tag   = "latest"
       }
     }
