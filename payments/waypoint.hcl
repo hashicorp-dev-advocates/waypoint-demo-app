@@ -25,16 +25,3 @@ app "payments-deployment" {
   release {}
 }
 
-app "payments-db" {
-  build {
-    use "noop" {}
-  }
-
-  deploy {
-    use "nomad-jobspec" {
-      jobspec = templatefile("${path.app}/deploy/payments-db.nomad")
-    }
-  }
-
-  release {}
-}
