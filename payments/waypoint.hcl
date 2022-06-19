@@ -10,7 +10,7 @@ app "payments-deployment" {
 
     registry {
       use "docker" {
-        image = "10.10.0.10/hashicraft/payments"
+        image = "10.10.0.100/hashicraft/payments"
         tag   = "latest"
       }
     }
@@ -25,3 +25,16 @@ app "payments-deployment" {
   release {}
 }
 
+app "payments-db" {
+  build {
+    use "noop" {}
+  }
+
+  deploy {
+    use "nomad-jobspec" {
+      jobspec = templatefile("${path.app}/deploy/payments-db.nomad")
+    }
+  }
+
+  release {}
+}
