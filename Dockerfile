@@ -1,17 +1,14 @@
-FROM golang:latest as build
+FROM alpine:latest
 
-RUN mkdir -p /go/src/github.com/nicholasjackson/canary-deploys/apps/api
-COPY . /go/src/github.com/nicholasjackson/canary-deploys/apps/api
-WORKDIR /go/src/github.com/nicholasjackson/canary-deploys/apps/api
+RUN apk update && apk add ca-certificates curl unzip && rm -rf /var/cache/apk/*
 
-RUN go get ./... && CGO_ENABLED=0 GOOS=linux go build -o ./bin/api
+RUN wget https://github.com/nicholasjackson/fake-service/releases/download/v0.23.1/fake_service_linux_amd64.zip; \
+      unzip fake_service_linux_amd64.zip; \
+      mkdir /app; \
+      mv ./fake-service /app/; \
+      chmod +x /app/fake-service
 
-FROM alpine:latest 
 
-RUN apk add --no-cache curl bash
+ENV LISTEN_ADDR="0.0.0.0:3000"
 
-ARG TARGETARCH
-
-COPY --from=build /go/src/github.com/nicholasjackson/canary-deploys/apps/api/bin/api /bin/api
-
-ENTRYPOINT [ "/bin/api" ]
+ENTRYPOINT ["/app/fake-service"]
