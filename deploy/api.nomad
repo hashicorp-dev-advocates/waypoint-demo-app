@@ -59,6 +59,12 @@ job "api-deployment" {
         ports = ["http"]
       }
 
+      env {
+        NAME                 = "API V1"
+        TIMING_50_PERCENTILE = "20ms"
+        UPSTREAM_URIS        = "http://localhost:3001"
+      }
+
       resources {
         cpu    = 500 # MHz
         memory = 128 # MB
